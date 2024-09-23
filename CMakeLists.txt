@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.27)
 
 set(VK_MESSAGE_EXPORTER_SOURCES
-    "src/main.cpp")
+    "src/main.cpp"
+    "src/error.h"
+)
 
 project(vk-message-exporter VERSION 0.1.0 LANGUAGES C CXX)
 
