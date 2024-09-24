@@ -17,5 +17,10 @@ target_include_directories(vk-message-exporter PRIVATE "src")
 
 find_package(SQLite3 REQUIRED)
 find_package(nlohmann_json REQUIRED)
+find_package(CURL REQUIRED)
 
-target_link_libraries(vk-message-exporter ${SQLite3_LIBRARIES} nlohmann_json::nlohmann_json)
+target_link_libraries(vk-message-exporter 
+    ${SQLite3_LIBRARIES} 
+    nlohmann_json::nlohmann_json
+    ${CURL_LIBRARIES}
+)
