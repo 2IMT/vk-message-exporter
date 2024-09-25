@@ -23,6 +23,15 @@ namespace vme::db
     {
     public:
         db(const std::string& db_file_path);
+
+        db(const db& other) = delete;
+
+        db(db&& other) noexcept;
+
+        db& operator=(const db& other) = delete;
+
+        db& operator=(db&& other) noexcept;
+
         ~db() noexcept;
 
     private:

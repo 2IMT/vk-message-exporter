@@ -30,6 +30,21 @@ namespace vme::db
         }
     }
 
+    db::db(db&& other) noexcept :
+        m_sqlite3(other.m_sqlite3)
+    {
+        other.m_sqlite3 = nullptr;
+    }
+
+    db& db::operator=(db&& other) noexcept
+    {
+        sqlite3_close(m_sqlite3);
+        m_sqlite3 = other.m_sqlite3;
+        other.m_sqlite3 = nullptr;
+
+        return *this;
+    }
+
     db::~db() noexcept { sqlite3_close(m_sqlite3); }
 
 }
