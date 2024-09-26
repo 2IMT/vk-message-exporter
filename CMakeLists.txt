@@ -6,6 +6,10 @@ set(VK_MESSAGE_EXPORTER_SOURCES
     "src/db/db.h"
     "src/db/db.cpp"
     "src/db/sql.h"
+    "src/api/session.h"
+    "src/api/session.cpp"
+    "src/api/params.h"
+    "src/api/params.cpp"
 )
 
 project(vk-message-exporter VERSION 0.1.0 LANGUAGES C CXX)
