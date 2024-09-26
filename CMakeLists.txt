@@ -10,6 +10,7 @@ set(VK_MESSAGE_EXPORTER_SOURCES
     "src/api/session.cpp"
     "src/api/params.h"
     "src/api/params.cpp"
+    "src/vk_data.h"
 )
 
 project(vk-message-exporter VERSION 0.1.0 LANGUAGES C CXX)
