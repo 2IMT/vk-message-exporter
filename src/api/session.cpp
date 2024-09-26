@@ -36,8 +36,6 @@ namespace vme::api
                         curl_easy_strerror(status)));
             }
 
-            curl_easy_setopt(m_curl, CURLOPT_WRITEFUNCTION, _curl_write_data);
-
             std::atexit(_curl_cleanup);
             curl_initialized = true;
         }
@@ -101,6 +99,7 @@ namespace vme::api
         std::stringstream data_stream;
 
         curl_easy_setopt(m_curl, CURLOPT_URL, addr.c_str());
+        curl_easy_setopt(m_curl, CURLOPT_WRITEFUNCTION, _curl_write_data);
         curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, &data_stream);
 
         CURLcode status = curl_easy_perform(m_curl);
