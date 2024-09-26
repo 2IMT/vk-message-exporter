@@ -114,8 +114,9 @@ namespace vme::vk_data
         gift,
     };
 
-    union attachment_value
+    struct attachment
     {
+        attachment_type type;
         photo photo_value;
         video video_value;
         audio audio_value;
@@ -126,12 +127,6 @@ namespace vme::vk_data
         comment comment_value;
         sticker sticker_value;
         gift gift_value;
-    };
-
-    struct attachment
-    {
-        attachment_type type;
-        attachment_value value;
     };
 
     struct message
