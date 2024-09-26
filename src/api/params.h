@@ -5,6 +5,8 @@
 #include <vector>
 #include <type_traits>
 
+#include "error.h"
+
 namespace vme::api
 {
 
@@ -27,6 +29,24 @@ namespace vme::api
         std::string m_value;
     };
 
+    class param_index_out_of_bounds : public error
+    {
+    public:
+        param_index_out_of_bounds(const std::string& message) noexcept :
+            error(message)
+        {
+        }
+    };
+
+    class param_not_found_error : public error
+    {
+    public:
+        param_not_found_error(const std::string& message) noexcept :
+            error(message)
+        {
+        }
+    };
+
     class params
     {
     public:
@@ -46,6 +66,16 @@ namespace vme::api
         auto begin() const noexcept { return m_values.begin(); }
 
         auto end() const noexcept { return m_values.end(); }
+
+        void set_param(const param& p);
+
+        void set_param(std::size_t index, const param& p);
+
+        void add_param(const param& p) noexcept;
+
+        void remove_param(const std::string& key);
+
+        void remove_param(std::size_t index);
 
         std::string to_query() const noexcept;
 
