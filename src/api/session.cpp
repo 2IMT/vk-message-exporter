@@ -15,10 +15,10 @@ namespace vme::api
     static size_t _curl_write_data(
         void* buffer, size_t size, size_t nmemb, void* user_data) noexcept
     {
-        std::stringstream* data_stream =
-            reinterpret_cast<std::stringstream*>(user_data);
+        std::stringstream& data_stream =
+            *reinterpret_cast<std::stringstream*>(user_data);
         std::string chunk(reinterpret_cast<char*>(buffer), nmemb);
-        *data_stream << chunk;
+        data_stream << chunk;
         return nmemb;
     }
 
