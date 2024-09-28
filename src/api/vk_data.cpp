@@ -1,6 +1,6 @@
 #include "vk_data.h"
 
-namespace vme::vk_data
+namespace vme::api::vk_data
 {
 
     std::string attachment_type_to_string(attachment_type type) noexcept

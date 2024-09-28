@@ -6,7 +6,7 @@
 #include <vector>
 #include <memory>
 
-namespace vme::vk_data
+namespace vme::api::vk_data
 {
 
     struct user
