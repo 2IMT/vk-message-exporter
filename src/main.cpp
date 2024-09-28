@@ -1,16 +1,40 @@
 #include <iostream>
+#include <cstddef>
 
-#include "db/db.h"
+#include "error.h"
+#include "args.h"
+#include "api/session.h"
+#include "api/message_stream.h"
+#include "api/vk_data.h"
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 {
-    std::cout << "Hello World!" << std::endl;
-
     try
     {
-        vme::db::db database("database.db");
+        vme::args args(argc, argv);
+        vme::api::session session("api.vk.com");
+
+        vme::api::message_stream message_stream(
+            std::move(session), args.peer_id(), args.access_token());
+
+        for (std::size_t i = 0; i < 2100; i++)
+        {
+            std::optional<vme::api::vk_data::message> message =
+                message_stream.next();
+            if (!message.has_value())
+            {
+                break;
+            }
+
+            std::cout << "Message-----------------------------------"
+                      << std::endl;
+            std::cout << message.value().from_id << std::endl;
+            std::cout << message.value().conversation_message_id << std::endl;
+            std::cout << message.value().date << std::endl;
+            std::cout << message.value().text << std::endl;
+        }
     }
-    catch (const vme::db::db_init_error& e)
+    catch (const vme::error& e)
     {
         std::cerr << e.what() << std::endl;
     }
