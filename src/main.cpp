@@ -37,6 +37,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
     catch (const vme::error& e)
     {
         std::cerr << e.what() << std::endl;
+        return 1;
     }
 
     return 0;
