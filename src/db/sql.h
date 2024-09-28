@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS videos (
     owner_id INTEGER NOT NULL,
     date INTEGER NOT NULL,
     title TEXT NOT NULL,
-    description TEXT NOT NULL
+    description TEXT
 );
 
 CREATE TABLE IF NOT EXISTS audios (
@@ -69,8 +69,7 @@ CREATE TABLE IF NOT EXISTS links (
     url TEXT NOT NULL,
     title TEXT NOT NULL,
     caption TEXT NOT NULL,
-    description TEXT NOT NULL,
-    has_photo INTEGER NOT NULL
+    description TEXT
 );
 
 CREATE TABLE IF NOT EXISTS products (
@@ -83,6 +82,14 @@ CREATE TABLE IF NOT EXISTS products (
     currency TEXT NOT NULL,
     category_name TEXT NOT NULL,
     category_section TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS product_albums (
+    id INTEGER NOT NULL PRIMARY KEY,
+    owner_id INTEGER NOT NULL,
+    title TEXT NOT NULL,
+    is_main INTEGER NOT NULL,
+    is_hidden INTEGER NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS posts (
@@ -106,6 +113,16 @@ CREATE TABLE IF NOT EXISTS stickers (
 
 CREATE TABLE IF NOT EXISTS gifts (
     id INTEGER NOT NULL PRIMARY KEY
+);
+
+CREATE TABLE IF NOT EXISTS calls (
+    id INTEGER NOT NULL PRIMARY KEY,
+    initiator_id INTEGER NOT NULL,
+    receiver_id INTEGER NOT NULL,
+    state TEXT NOT NULL,
+    time INTEGER NOT NULL,
+    duration INTEGER NOT NULL,
+    video INTEGER NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS message_attachments (
