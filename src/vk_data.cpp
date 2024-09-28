@@ -10,34 +10,28 @@ namespace vme::vk_data
             using enum attachment_type;
         case photo:
             return "photo";
-            break;
         case video:
             return "video";
-            break;
         case audio:
             return "audio";
-            break;
         case document:
             return "doc";
-            break;
         case link:
             return "link";
-            break;
         case product:
             return "market";
-            break;
+        case product_album:
+            return "market_album";
         case post:
             return "wall";
-            break;
         case comment:
             return "wall_reply";
-            break;
         case sticker:
             return "sticker";
-            break;
         case gift:
             return "gift";
-            break;
+        case call:
+            return "call";
         default:
             return "unknown";
         }
@@ -72,6 +66,10 @@ namespace vme::vk_data
         {
             return product;
         }
+        if (type == "market_album")
+        {
+            return product_album;
+        }
         if (type == "wall")
         {
             return post;
@@ -87,6 +85,10 @@ namespace vme::vk_data
         if (type == "gift")
         {
             return gift;
+        }
+        if (type == "call")
+        {
+            return call;
         }
 
         return std::nullopt;
