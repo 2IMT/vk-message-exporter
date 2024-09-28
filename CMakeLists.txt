@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.27)
 set(VK_MESSAGE_EXPORTER_SOURCES
     "src/main.cpp"
     "src/error.h"
+    "src/args.h"
+    "src/args.cpp"
     "src/db/db.h"
     "src/db/db.cpp"
     "src/db/sql.h"
