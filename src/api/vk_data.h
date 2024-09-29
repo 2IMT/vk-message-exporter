@@ -168,6 +168,7 @@ namespace vme::api::vk_data
         std::optional<std::int64_t> reply_conversation_message_id;
         std::vector<std::shared_ptr<message>> fwd_messages;
         std::vector<attachment> attachments;
+        std::string original_json;
     };
 
 }

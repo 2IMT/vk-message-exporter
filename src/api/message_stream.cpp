@@ -212,6 +212,8 @@ namespace vme::api
     {
         vk_data::message result;
 
+        result.original_json = message_item.dump();
+
         result.from_id =
             message_item.at("from_id").template get<std::int64_t>();
 
