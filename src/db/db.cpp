@@ -20,7 +20,7 @@ namespace vme::db
         }
 
         char* message = nullptr;
-        status = sqlite3_exec(m_sqlite3, sql::init, nullptr, nullptr, &message);
+        status = sqlite3_exec(m_sqlite3, sql::init.c_str(), nullptr, nullptr, &message);
         if (status)
         {
             throw db_init_error(

@@ -1,9 +1,11 @@
 #pragma once
 
+#include <string>
+
 namespace vme::db::sql
 {
 
-    static inline const char* init = R""""(
+    static inline const std::string init = R""""(
 CREATE TABLE IF NOT EXISTS messages (
     from_id INTEGER NOT NULL,
     conversation_message_id INTEGER NOT NULL,
