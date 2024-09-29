@@ -39,12 +39,15 @@ namespace vme::api
 
         std::optional<vk_data::message> next();
 
+        std::size_t message_count() const noexcept;
+
     private:
         api::session m_session;
         std::int64_t m_peer_id;
         std::string m_access_token;
         std::size_t m_current_offset;
         std::queue<vk_data::message> m_message_buffer;
+        std::size_t m_message_count;
     };
 
 }

@@ -3,6 +3,7 @@
 
 #include <format>
 #include <cstdint>
+#include <cstddef>
 
 #define JSON_DIAGNOSTICS 1
 #include <nlohmann/json.hpp>
@@ -267,7 +268,7 @@ namespace vme::api
     }
 
     static std::vector<vk_data::message> _parse_messages(
-        const std::string& response)
+        const std::string& response, std::size_t& count)
     {
         try
         {
@@ -287,6 +288,9 @@ namespace vme::api
             }
 
             nlohmann::json& response_body = response_json.at("response");
+
+            nlohmann::json& count_obj = response_body.at("count");
+            count = count_obj.template get<std::size_t>();
 
             nlohmann::json& items = response_body.at("items");
 
@@ -312,7 +316,8 @@ namespace vme::api
         m_session(std::move(s)),
         m_peer_id(peer_id),
         m_access_token(access_token),
-        m_current_offset(0)
+        m_current_offset(0),
+        m_message_count(0)
     {
     }
 
@@ -332,7 +337,8 @@ namespace vme::api
             });
             // clang-format on
 
-            std::vector<vk_data::message> messages = _parse_messages(response);
+            std::vector<vk_data::message> messages =
+                _parse_messages(response, m_message_count);
             m_current_offset += messages.size();
 
             for (const auto& message : messages)
@@ -349,6 +355,11 @@ namespace vme::api
         vk_data::message message = std::move(m_message_buffer.front());
         m_message_buffer.pop();
         return std::make_optional(message);
+    }
+
+    std::size_t message_stream::message_count() const noexcept
+    {
+        return m_message_count;
     }
 
 }
