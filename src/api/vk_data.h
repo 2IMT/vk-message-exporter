@@ -113,6 +113,7 @@ namespace vme::api::vk_data
 
     struct call
     {
+        std::int64_t id;
         std::int64_t initiator_id;
         std::int64_t receiver_id;
         std::string state;
