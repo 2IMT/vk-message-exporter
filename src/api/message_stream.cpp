@@ -1,5 +1,4 @@
 #include "message_stream.h"
-#include "vk_data.h"
 
 #include <format>
 #include <cstdint>
