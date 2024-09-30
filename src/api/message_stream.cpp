@@ -312,7 +312,7 @@ namespace vme::api
     }
 
     message_stream::message_stream(api::session&& s, std::int64_t peer_id,
-        std::string access_token) noexcept :
+        const std::string& access_token) noexcept :
         m_session(std::move(s)),
         m_peer_id(peer_id),
         m_access_token(access_token),

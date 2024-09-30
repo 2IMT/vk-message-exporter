@@ -35,7 +35,7 @@ namespace vme::api
     {
     public:
         message_stream(api::session&& s, std::int64_t peer_id,
-            std::string access_token) noexcept;
+            const std::string& access_token) noexcept;
 
         std::optional<vk_data::message> next();
 
