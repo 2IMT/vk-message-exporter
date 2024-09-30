@@ -77,7 +77,6 @@ CREATE TABLE IF NOT EXISTS links (
 CREATE TABLE IF NOT EXISTS products (
     id INTEGER NOT NULL PRIMARY KEY,
     owner_id INTEGER NOT NULL,
-    date INTEGER NOT NULL,
     title TEXT NOT NULL,
     description TEXT NOT NULL,
     price TEXT NOT NULL,
