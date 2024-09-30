@@ -34,7 +34,7 @@ namespace vme::api
     class message_stream
     {
     public:
-        message_stream(api::session&& s, std::int64_t peer_id,
+        message_stream(api::session& s, std::int64_t peer_id,
             const std::string& access_token) noexcept;
 
         std::optional<vk_data::message> next();
@@ -42,7 +42,7 @@ namespace vme::api
         std::size_t message_count() const noexcept;
 
     private:
-        api::session m_session;
+        api::session& m_session;
         std::int64_t m_peer_id;
         std::string m_access_token;
         std::size_t m_current_offset;
