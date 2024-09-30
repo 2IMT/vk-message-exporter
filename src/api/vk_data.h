@@ -55,6 +55,7 @@ namespace vme::api::vk_data
 
     struct link
     {
+        std::int64_t id;
         std::string url;
         std::string title;
         std::string caption;
