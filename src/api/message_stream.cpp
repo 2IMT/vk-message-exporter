@@ -23,7 +23,7 @@ namespace vme::api
             vk_data::attachment_type_from_string(type_str);
         if (!type.has_value())
         {
-            throw message_stream_invalid_response_error(
+            throw json_response_parse_error(
                 "Invalid API response: Attachment item has unknown type");
         }
 
@@ -294,16 +294,8 @@ namespace vme::api
         }
         catch (const nlohmann::json::exception& e)
         {
-            throw message_stream_invalid_response_error(
+            throw json_response_parse_error(
                 std::format("Invalid API response: {}", e.what()));
-        }
-        catch (const json_response_parse_error& e)
-        {
-            throw message_stream_invalid_response_error(e.what());
-        }
-        catch (const json_response_error& e)
-        {
-            throw message_stream_api_error(e.what());
         }
     }
 
