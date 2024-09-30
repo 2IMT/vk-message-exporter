@@ -139,4 +139,144 @@ CREATE INDEX IF NOT EXISTS
     ON message_attachments(message_from_id, message_conversation_message_id);
 )"""";
 
+    static inline const std::string insert_message = R""""(
+INSERT INTO messages
+(from_id, conversation_message_id, date, important, text,
+reply_conversation_message_id)
+VALUES (?1, ?2, ?3, ?4, ?5, ?6);
+)"""";
+
+    static inline const std::string insert_forwarded_message = R""""(
+INSERT INTO forwarded_messages
+(message_from_id, message_conversation_message_id, forwarded_from_id,
+forwarded_conversation_message_id, sequence_number)
+VALUES (?1, ?2, ?3, ?4, ?5);
+)"""";
+
+    static inline const std::string insert_user = R""""(
+INSERT INTO users (id, first_name, last_name)
+VALUES (?1, ?2, ?3);
+)"""";
+
+    static inline const std::string exists_user = R""""(
+SELECT EXISTS (SELECT * FROM users WHERE id = ?1);
+)"""";
+
+    static inline const std::string insert_photo = R""""(
+INSERT INTO photos (id, owner_id, date)
+VALUES (?1, ?2, ?3);
+)"""";
+
+    static inline const std::string exists_photo = R""""(
+SELECT EXISTS (SELECT * FROM photos WHERE id = ?1);
+)"""";
+
+    static inline const std::string insert_video = R""""(
+INSERT INTO videos (id, owner_id, date, title, description)
+VALUES (?1, ?2, ?3, ?4, ?5);
+)"""";
+
+    static inline const std::string exists_video = R""""(
+SELECT EXISTS (SELECT * FROM videos WHERE id = ?1);
+)"""";
+
+    static inline const std::string insert_audio = R""""(
+INSERT INTO audios (id, owner_id, artist, title, duration)
+VALUES (?1, ?2, ?3, ?4, ?5);
+)"""";
+
+    static inline const std::string exists_audio = R""""(
+SELECT EXISTS (SELECT * FROM audios WHERE id = ?1);
+)"""";
+
+    static inline const std::string insert_document = R""""(
+INSERT INTO documents (id, owner_id, date, title, ext)
+VALUES (?1, ?2, ?3, ?4, ?5);
+)"""";
+
+    static inline const std::string exists_document = R""""(
+SELECT EXISTS (SELECT * FROM documents WHERE id = ?1);
+)"""";
+
+    static inline const std::string insert_link = R""""(
+INSERT INTO links (id, url, title, caption, description)
+VALUES (?1, ?2, ?3, ?4, ?5);
+)"""";
+
+    static inline const std::string exists_link = R""""(
+SELECT EXISTS (SELECT * FROM links WHERE id = ?1);
+)"""";
+
+    static inline const std::string insert_product = R""""(
+INSERT INTO products (id, owner_id, title, description, price, currency,
+category_name, category_section)
+VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8);
+)"""";
+
+    static inline const std::string exists_product = R""""(
+SELECT EXISTS (SELECT * FROM products WHERE id = ?1);
+)"""";
+
+    static inline const std::string insert_product_album = R""""(
+INSERT INTO product_albums (id, owner_id, title, is_main, is_hidden)
+VALUES (?1, ?2, ?3, ?4, ?5);
+)"""";
+
+    static inline const std::string exists_product_album = R""""(
+SELECT EXISTS (SELECT * FROM product_albums WHERE id = ?1);
+)"""";
+
+    static inline const std::string insert_post = R""""(
+INSERT INTO posts (id, owner_id, from_id, date, text)
+VALUES (?1, ?2, ?3, ?4, ?5);
+)"""";
+
+    static inline const std::string exists_post = R""""(
+SELECT EXISTS (SELECT * FROM posts WHERE id = ?1);
+)"""";
+
+    static inline const std::string insert_comment = R""""(
+INSERT INTO comments (id, from_id, date, text)
+VALUES (?1, ?2, ?3, ?4);
+)"""";
+
+    static inline const std::string exists_comment = R""""(
+SELECT EXISTS (SELECT * FROM comments WHERE id = ?1);
+)"""";
+
+    static inline const std::string insert_sticker = R""""(
+INSERT INTO stickers (id)
+VALUES (?1);
+)"""";
+
+    static inline const std::string exists_sticker = R""""(
+SELECT EXISTS (SELECT * FROM sticker WHERE id = ?1);
+)"""";
+
+    static inline const std::string insert_gift = R""""(
+INSERT INTO gifts (id)
+VALUES (?1);
+)"""";
+
+    static inline const std::string exists_gift = R""""(
+SELECT EXISTS (SELECT * FROM gifts WHERE id = ?1);
+)"""";
+
+    static inline const std::string insert_call = R""""(
+INSERT INTO calls (id, initiator_id, receiver_id, state, time, duration,
+video)
+VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7);
+)"""";
+
+    static inline const std::string exists_call = R""""(
+SELECT EXISTS (SELECT * FROM calls WHERE id = ?1);
+)"""";
+
+    static inline const std::string insert_message_attachment = R""""(
+INSERT INTO message_attachments (message_from_id,
+message_conversation_message_id, sequence_number, attachment_id,
+attachment_type)
+VALUES (?1, ?2, ?3, ?4, ?5);
+)"""";
+
 }
