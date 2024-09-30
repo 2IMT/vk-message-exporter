@@ -250,7 +250,7 @@ VALUES (?1);
 )"""";
 
     static inline const std::string exists_sticker = R""""(
-SELECT EXISTS (SELECT * FROM sticker WHERE id = ?1);
+SELECT EXISTS (SELECT * FROM stickers WHERE id = ?1);
 )"""";
 
     static inline const std::string insert_gift = R""""(
