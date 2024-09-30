@@ -7,6 +7,8 @@
 #define JSON_DIAGNOSTICS 1
 #include <nlohmann/json.hpp>
 
+#include "json_response.h"
+
 namespace vme::api
 {
 
@@ -271,22 +273,9 @@ namespace vme::api
     {
         try
         {
-            nlohmann::json response_json = nlohmann::json::parse(response);
+            json_response response_json(response);
 
-            if (response_json.contains("error"))
-            {
-                nlohmann::json& error_object = response_json.at("error");
-
-                nlohmann::json& error_code_obj = error_object.at("error_code");
-                nlohmann::json& error_msg_obj = error_object.at("error_msg");
-
-                throw message_stream_api_error(
-                    std::format("API returned an error: {} {}",
-                        error_code_obj.template get<int>(),
-                        error_msg_obj.template get<std::string>()));
-            }
-
-            nlohmann::json& response_body = response_json.at("response");
+            nlohmann::json& response_body = response_json.get();
 
             nlohmann::json& count_obj = response_body.at("count");
             count = count_obj.template get<std::size_t>();
@@ -307,6 +296,14 @@ namespace vme::api
         {
             throw message_stream_invalid_response_error(
                 std::format("Invalid API response: {}", e.what()));
+        }
+        catch (const json_response_parse_error& e)
+        {
+            throw message_stream_invalid_response_error(e.what());
+        }
+        catch (const json_response_error& e)
+        {
+            throw message_stream_api_error(e.what());
         }
     }
 
