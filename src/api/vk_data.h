@@ -131,6 +131,18 @@ namespace vme::api::vk_data
         std::string link_mp3;
     };
 
+    struct audio_playlist
+    {
+        std::int64_t id;
+        std::int64_t owner_id;
+        std::int64_t create_time;
+        std::int64_t update_time;
+        std::int64_t year;
+        std::string title;
+        std::string description;
+        std::vector<audio> audios;
+    };
+
     enum class attachment_type
     {
         photo,
@@ -145,7 +157,8 @@ namespace vme::api::vk_data
         sticker,
         gift,
         call,
-        audio_message
+        audio_message,
+        audio_playlist
     };
 
     std::string attachment_type_to_string(attachment_type type) noexcept;
@@ -169,6 +182,7 @@ namespace vme::api::vk_data
         gift gift_value;
         call call_value;
         audio_message audio_message_value;
+        audio_playlist audio_playlist_value;
     };
 
     struct message

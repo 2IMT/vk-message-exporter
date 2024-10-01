@@ -34,6 +34,8 @@ namespace vme::api::vk_data
             return "call";
         case audio_message:
             return "audio_message";
+        case audio_playlist:
+            return "audio_playlist";
         default:
             return "unknown";
         }
@@ -95,6 +97,10 @@ namespace vme::api::vk_data
         if (type == "audio_message")
         {
             return audio_message;
+        }
+        if (type == "audio_playlist")
+        {
+            return audio_playlist;
         }
 
         return std::nullopt;
