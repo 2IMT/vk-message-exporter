@@ -225,7 +225,15 @@ namespace vme::api
 
         result.date = message_item.at("date").template get<std::int64_t>();
 
-        result.important = message_item.at("important").template get<bool>();
+        if (message_item.contains("important"))
+        {
+            result.important =
+                message_item.at("important").template get<bool>();
+        }
+        else
+        {
+            result.important = false;
+        }
 
         result.text = message_item.at("text").template get<std::string>();
 
