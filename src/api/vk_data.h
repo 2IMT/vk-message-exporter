@@ -122,6 +122,15 @@ namespace vme::api::vk_data
         bool video;
     };
 
+    struct audio_message
+    {
+        std::int64_t id;
+        std::int64_t owner_id;
+        std::int64_t duration;
+        std::vector<std::uint16_t> waveform;
+        std::string link_mp3;
+    };
+
     enum class attachment_type
     {
         photo,
@@ -135,7 +144,8 @@ namespace vme::api::vk_data
         comment,
         sticker,
         gift,
-        call
+        call,
+        audio_message
     };
 
     std::string attachment_type_to_string(attachment_type type) noexcept;
@@ -158,6 +168,7 @@ namespace vme::api::vk_data
         sticker sticker_value;
         gift gift_value;
         call call_value;
+        audio_message audio_message_value;
     };
 
     struct message
