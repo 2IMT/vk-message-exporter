@@ -126,6 +126,13 @@ CREATE TABLE IF NOT EXISTS calls (
     video INTEGER NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS audio_messages (
+    id INTEGER NOT NULL PRIMARY KEY,
+    owner_id INTEGER NOT NULL,
+    duration INTEGER NOT NULL,
+    waveform BLOB NOT NULL
+)
+
 CREATE TABLE IF NOT EXISTS message_attachments (
     message_from_id INTEGER NOT NULL,
     message_conversation_message_id INTEGER NOT NULL,
@@ -272,11 +279,21 @@ VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7);
 SELECT EXISTS (SELECT * FROM calls WHERE id = ?1);
 )"""";
 
+    static inline const std::string exists_audio_message = R""""(
+SELECT EXISTS (SELECT * FROM audio_messages WHERE id = ?1);
+)"""";
+
+    static inline const std::string insert_audio_message = R""""(
+INSERT INTO audio_messages (id, owner_id, duration, waveform)
+VALUES (?1, ?2, ?3, ?4);
+)"""";
+
     static inline const std::string insert_message_attachment = R""""(
 INSERT INTO message_attachments (message_from_id,
 message_conversation_message_id, sequence_number, attachment_id,
 attachment_type)
 VALUES (?1, ?2, ?3, ?4, ?5);
 )"""";
+
 
 }
