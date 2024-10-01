@@ -69,7 +69,7 @@ namespace vme::api
             {
                 const nlohmann::json& images_array = attachment.at("image");
                 const nlohmann::json& url_object =
-                    images_array.at(images_array.size()).at("url");
+                    images_array.at(images_array.size() - 1).at("url");
                 result.video_value.image_url =
                     url_object.template get<std::string>();
             }
