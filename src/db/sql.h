@@ -131,7 +131,7 @@ CREATE TABLE IF NOT EXISTS audio_messages (
     owner_id INTEGER NOT NULL,
     duration INTEGER NOT NULL,
     waveform BLOB NOT NULL
-)
+);
 
 CREATE TABLE IF NOT EXISTS message_attachments (
     message_from_id INTEGER NOT NULL,
