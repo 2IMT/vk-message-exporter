@@ -104,11 +104,13 @@ namespace vme::api::vk_data
     struct sticker
     {
         std::int64_t id;
+        std::string url;
     };
 
     struct gift
     {
         std::int64_t id;
+        std::string url;
     };
 
     struct call
