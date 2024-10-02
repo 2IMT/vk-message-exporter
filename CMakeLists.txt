@@ -5,6 +5,8 @@ set(VK_MESSAGE_EXPORTER_SOURCES
     "src/error.h"
     "src/args.h"
     "src/args.cpp"
+    "src/curl.h"
+    "src/curl.cpp"
     "src/db/db.h"
     "src/db/db.cpp"
     "src/db/sql.h"
