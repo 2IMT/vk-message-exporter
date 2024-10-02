@@ -133,6 +133,29 @@ CREATE TABLE IF NOT EXISTS audio_messages (
     waveform BLOB NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS audio_playlists (
+    id INTEGER NOT NULL PRIMARY KEY,
+    owner_id INTEGER NOT NULL,
+    create_time INTEGER NOT NULL,
+    update_time INTEGER NOT NULL,
+    year INTEGER NOT NULL,
+    title TEXT NOT NULL,
+    description TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS audio_playlist_audios (
+    audio_id INTEGER NOT NULL,
+    audio_playlist_id INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS graffitis (
+    id INTEGER NOT NULL PRIMARY KEY,
+    owner_id INTEGER NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_audio_playlist_audios_audio_id_audio_playlist_id
+    ON audio_playlist_audios(audio_id, audio_playlist_id);
+
 CREATE TABLE IF NOT EXISTS message_attachments (
     message_from_id INTEGER NOT NULL,
     message_conversation_message_id INTEGER NOT NULL,
@@ -144,6 +167,11 @@ CREATE TABLE IF NOT EXISTS message_attachments (
 CREATE INDEX IF NOT EXISTS 
     idx_message_attachments_message_from_id_message_conversation_message_id
     ON message_attachments(message_from_id, message_conversation_message_id);
+)"""";
+
+    static inline const std::string exists_message = R""""(
+SELECT EXISTS (SELECT * FROM messages WHERE 
+               from_id = ?1 AND conversation_message_id = ?2);
 )"""";
 
     static inline const std::string insert_message = R""""(
@@ -286,6 +314,34 @@ SELECT EXISTS (SELECT * FROM audio_messages WHERE id = ?1);
     static inline const std::string insert_audio_message = R""""(
 INSERT INTO audio_messages (id, owner_id, duration, waveform)
 VALUES (?1, ?2, ?3, ?4);
+)"""";
+
+    static inline const std::string exists_audio_playlist = R""""(
+SELECT EXISTS (SELECT * FROM audio_playlists WHERE id = ?1);
+)"""";
+
+    static inline const std::string insert_audio_playlist = R""""(
+INSERT INTO audio_playlists (id, owner_id, create_time, update_time, year,
+title, description)
+VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7);
+)"""";
+
+    static inline const std::string exists_audio_playlist_audio = R""""(
+SELECT EXISTS (SELECT * FROM audio_playlist_audios WHERE id = ?1);
+)"""";
+
+    static inline const std::string insert_audio_playlist_audio = R""""(
+INSERT INTO audio_playlist_audios (audio_id, audio_playlist_id)
+VALUES (?1, ?2);
+)"""";
+
+    static inline const std::string exists_graffiti = R""""(
+SELECT EXISTS (SELECT * FROM graffitis WHERE id = ?1);
+)"""";
+
+    static inline const std::string insert_graffiti = R""""(
+INSERT INTO graffitis (id, owner_id)
+VALUES (?1, ?2);
 )"""";
 
     static inline const std::string insert_message_attachment = R""""(
