@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS messages (
     important INTEGER NOT NULL,
     text TEXT NOT NULL,
     reply_conversation_message_id INTEGER,
+    original_json TEXT NOT NULL,
     PRIMARY KEY (from_id, conversation_message_id)
 );
 
@@ -192,8 +193,8 @@ SELECT EXISTS (SELECT * FROM messages WHERE
     static inline const std::string insert_message = R""""(
 INSERT INTO messages
 (from_id, conversation_message_id, date, important, text,
-reply_conversation_message_id)
-VALUES (?1, ?2, ?3, ?4, ?5, ?6);
+reply_conversation_message_id, original_json)
+VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7);
 )"""";
 
     static inline const std::string insert_forwarded_message = R""""(
