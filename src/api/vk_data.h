@@ -150,6 +150,15 @@ namespace vme::api::vk_data
         std::string url;
     };
 
+    struct money_request
+    {
+        std::int64_t id;
+        std::int64_t from_id;
+        std::int64_t to_id;
+        std::string amount;
+        std::string currency;
+    };
+
     enum class attachment_type
     {
         photo,
@@ -166,7 +175,8 @@ namespace vme::api::vk_data
         call,
         audio_message,
         audio_playlist,
-        graffiti
+        graffiti,
+        money_request
     };
 
     std::string attachment_type_to_string(attachment_type type) noexcept;
@@ -192,6 +202,7 @@ namespace vme::api::vk_data
         audio_message audio_message_value;
         audio_playlist audio_playlist_value;
         graffiti graffiti_value;
+        money_request money_request_value;
     };
 
     struct message
