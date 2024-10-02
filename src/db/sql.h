@@ -7,6 +7,7 @@ namespace vme::db::sql
 
     static inline const std::string init = R""""(
 CREATE TABLE IF NOT EXISTS messages (
+    id INTEGER,
     from_id INTEGER NOT NULL,
     conversation_message_id INTEGER NOT NULL,
     date INTEGER NOT NULL,
@@ -14,7 +15,7 @@ CREATE TABLE IF NOT EXISTS messages (
     text TEXT NOT NULL,
     reply_conversation_message_id INTEGER,
     original_json TEXT NOT NULL,
-    PRIMARY KEY (from_id, conversation_message_id)
+    PRIMARY KEY (id, from_id, conversation_message_id)
 );
 
 CREATE INDEX IF NOT EXISTS idx_messages_from_id_date ON messages(from_id, date);
@@ -186,15 +187,16 @@ CREATE INDEX IF NOT EXISTS
 )"""";
 
     static inline const std::string exists_message = R""""(
-SELECT EXISTS (SELECT * FROM messages WHERE 
-               from_id = ?1 AND conversation_message_id = ?2);
+SELECT EXISTS (SELECT * FROM messages 
+               WHERE id = ?1 AND from_id = ?2 
+               AND conversation_message_id = ?3);
 )"""";
 
     static inline const std::string insert_message = R""""(
 INSERT INTO messages
-(from_id, conversation_message_id, date, important, text,
+(id, from_id, conversation_message_id, date, important, text,
 reply_conversation_message_id, original_json)
-VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7);
+VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8);
 )"""";
 
     static inline const std::string insert_forwarded_message = R""""(
