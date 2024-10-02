@@ -217,6 +217,7 @@ namespace vme::api::vk_data
 
     struct message
     {
+        std::optional<std::int64_t> id;
         std::int64_t from_id;
         std::int64_t conversation_message_id;
         std::int64_t date;
