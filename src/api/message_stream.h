@@ -8,9 +8,19 @@
 
 #include "api/session.h"
 #include "vk_data.h"
+#include "error.h"
 
 namespace vme::api
 {
+
+    class message_stream_response_error : public error
+    {
+    public:
+        message_stream_response_error(const std::string& message) noexcept :
+            error(message)
+        {
+        }
+    };
 
     class message_stream
     {

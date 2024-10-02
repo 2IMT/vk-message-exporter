@@ -7,8 +7,6 @@
 #define JSON_DIAGNOSTICS 1
 #include <nlohmann/json.hpp>
 
-#include "json_response.h"
-
 namespace vme::api
 {
 
@@ -23,8 +21,9 @@ namespace vme::api
             vk_data::attachment_type_from_string(type_str);
         if (!type.has_value())
         {
-            throw json_response_parse_error(
-                "Invalid API response: Attachment item has unknown type");
+            throw message_stream_response_error(std::format(
+                "Invalid API response: Attachment item has unknown type \"{}\"",
+                type_str));
         }
 
         result.type = type.value();
@@ -281,10 +280,22 @@ namespace vme::api
     {
         try
         {
-            json_response response_json(response);
+            nlohmann::json response_json = nlohmann::json::parse(response);
 
-            nlohmann::json& response_body = response_json.get();
+            if (response_json.contains("error"))
+            {
+                nlohmann::json& error_object = response_json.at("error");
 
+                nlohmann::json& error_code_obj = error_object.at("error_code");
+                nlohmann::json& error_msg_obj = error_object.at("error_msg");
+
+                throw message_stream_response_error(
+                    std::format("API returned an error: {} {}",
+                        error_code_obj.template get<int>(),
+                        error_msg_obj.template get<std::string>()));
+            }
+
+            nlohmann::json response_body = response_json.at("response");
             nlohmann::json& count_obj = response_body.at("count");
             count = count_obj.template get<std::size_t>();
 
@@ -302,7 +313,7 @@ namespace vme::api
         }
         catch (const nlohmann::json::exception& e)
         {
-            throw json_response_parse_error(
+            throw message_stream_response_error(
                 std::format("Invalid API response: {}", e.what()));
         }
     }
