@@ -153,6 +153,14 @@ CREATE TABLE IF NOT EXISTS graffitis (
     owner_id INTEGER NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS money_requests (
+    id INTEGER NOT NULL PRIMARY KEY,
+    from_id INTEGER NOT NULL,
+    to_id INTEGER NOT NULL,
+    amount TEXT NOT NULL,
+    currency TEXT NOT NULL
+);
+
 CREATE INDEX IF NOT EXISTS idx_audio_playlist_audios_audio_id_audio_playlist_id
     ON audio_playlist_audios(audio_id, audio_playlist_id);
 
@@ -342,6 +350,15 @@ SELECT EXISTS (SELECT * FROM graffitis WHERE id = ?1);
     static inline const std::string insert_graffiti = R""""(
 INSERT INTO graffitis (id, owner_id)
 VALUES (?1, ?2);
+)"""";
+
+    static inline const std::string exists_money_request = R""""(
+SELECT EXISTS (SELECT * FROM money_requests WHERE id = ?1);
+)"""";
+
+    static inline const std::string insert_money_request = R""""(
+INSERT INTO money_requests (id, from_id, to_id, amount, currency)
+VALUES (?1, ?2, ?3, ?4, ?5);
 )"""";
 
     static inline const std::string insert_message_attachment = R""""(
