@@ -40,6 +40,8 @@ namespace vme::api::vk_data
             return "graffiti";
         case money_request:
             return "money_request";
+        case story:
+            return "story";
         default:
             return "unknown";
         }
@@ -113,6 +115,10 @@ namespace vme::api::vk_data
         if (type == "money_request")
         {
             return money_request;
+        }
+        if (type == "story")
+        {
+            return story;
         }
 
         return std::nullopt;
