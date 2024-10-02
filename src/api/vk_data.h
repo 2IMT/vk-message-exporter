@@ -143,6 +143,13 @@ namespace vme::api::vk_data
         std::vector<audio> audios;
     };
 
+    struct graffiti
+    {
+        std::int64_t id;
+        std::int64_t owner_id;
+        std::string url;
+    };
+
     enum class attachment_type
     {
         photo,
@@ -158,7 +165,8 @@ namespace vme::api::vk_data
         gift,
         call,
         audio_message,
-        audio_playlist
+        audio_playlist,
+        graffiti
     };
 
     std::string attachment_type_to_string(attachment_type type) noexcept;
@@ -183,6 +191,7 @@ namespace vme::api::vk_data
         call call_value;
         audio_message audio_message_value;
         audio_playlist audio_playlist_value;
+        graffiti graffiti_value;
     };
 
     struct message

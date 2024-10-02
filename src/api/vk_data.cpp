@@ -36,6 +36,8 @@ namespace vme::api::vk_data
             return "audio_message";
         case audio_playlist:
             return "audio_playlist";
+        case graffiti:
+            return "graffiti";
         default:
             return "unknown";
         }
@@ -101,6 +103,10 @@ namespace vme::api::vk_data
         if (type == "audio_playlist")
         {
             return audio_playlist;
+        }
+        if (type == "graffiti")
+        {
+            return graffiti;
         }
 
         return std::nullopt;
