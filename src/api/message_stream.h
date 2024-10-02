@@ -39,6 +39,8 @@ namespace vme::api
         std::size_t m_current_offset;
         std::queue<vk_data::message> m_message_buffer;
         std::size_t m_message_count;
+        std::int64_t m_link_id_counter;
+        std::int64_t m_call_id_counter;
     };
 
 }
