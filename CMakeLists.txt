@@ -10,6 +10,8 @@ set(VK_MESSAGE_EXPORTER_SOURCES
     "src/db/db.h"
     "src/db/db.cpp"
     "src/db/sql.h"
+    "src/db/storage.h"
+    "src/db/storage.cpp"
     "src/api/session.h"
     "src/api/session.cpp"
     "src/api/params.h"
