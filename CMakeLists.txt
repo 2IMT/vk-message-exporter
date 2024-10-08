@@ -20,6 +20,8 @@ set(VK_MESSAGE_EXPORTER_SOURCES
     "src/api/vk_data.cpp"
     "src/api/message_stream.h"
     "src/api/message_stream.cpp"
+    "src/api/user_pool.h"
+    "src/api/user_pool.cpp"
 )
 
 project(vk-message-exporter VERSION 0.1.0 LANGUAGES C CXX)
