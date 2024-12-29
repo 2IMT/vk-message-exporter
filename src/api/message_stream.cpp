@@ -3,6 +3,7 @@
 #include <format>
 #include <cstdint>
 #include <cstddef>
+#include <optional>
 
 #define JSON_DIAGNOSTICS 1
 #include <nlohmann/json.hpp>
@@ -29,7 +30,7 @@ namespace vme::api
         out.votes = item.at("votes").template get<std::int64_t>();
     }
 
-    static vk_data::attachment _parse_attachment(
+    static std::optional<vk_data::attachment> _parse_attachment(
         const nlohmann::json& attachment_item, std::int64_t& link_id_counter,
         std::int64_t& call_id_counter)
     {
@@ -41,9 +42,7 @@ namespace vme::api
             vk_data::attachment_type_from_string(type_str);
         if (!type.has_value())
         {
-            throw message_stream_response_error(std::format(
-                "Invalid API response: Attachment item has unknown type \"{}\"",
-                type_str));
+            return std::nullopt;
         }
 
         result.type = type.value();
@@ -458,8 +457,13 @@ namespace vme::api
             for (const nlohmann::json& attachment_item :
                 message_item.at("attachments"))
             {
-                result.attachments.push_back(_parse_attachment(
-                    attachment_item, link_id_counter, call_id_counter));
+                auto attachment = _parse_attachment(
+                    attachment_item, link_id_counter, call_id_counter);
+
+                if (attachment.has_value())
+                {
+                    result.attachments.push_back(attachment.value());
+                }
             }
         }
 
