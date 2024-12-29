@@ -150,6 +150,22 @@ CREATE TABLE IF NOT EXISTS audio_playlist_audios (
     audio_playlist_id INTEGER NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS polls (
+    id INTEGER NOT NULL PRIMARY KEY,
+    owner_id INTEGER NOT NULL,
+    question TEXT NOT NULL,
+    votes INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS poll_answers (
+    id INTEGER NOT NULL,
+    poll_id INTEGER NOT NULL,
+    rate REAL NOT NULL,
+    text TEXT NOT NULL,
+    votes INTEGER NOT NULL,
+    PRIMARY KEY (id, poll_id)
+);
+
 CREATE INDEX IF NOT EXISTS idx_audio_playlist_audios_audio_id_audio_playlist_id
     ON audio_playlist_audios(audio_id, audio_playlist_id);
 
@@ -378,6 +394,25 @@ SELECT EXISTS (SELECT * FROM stories WHERE id = ?1);
     static inline const std::string insert_story = R""""(
 INSERT INTO stories (id, owner_id, date, expires_at)
 VALUES (?1, ?2, ?3, ?4);
+)"""";
+
+    static inline const std::string insert_poll = R""""(
+INSERT INTO polls (id, owner_id, question, votes)
+VALUES (?1, ?2, ?3, ?4);
+)"""";
+
+    static inline const std::string exists_poll = R""""(
+SELECT EXISTS (SELECT * FROM polls WHERE id = ?1);
+)"""";
+
+    static inline const std::string insert_poll_answer = R""""(
+INSERT INTO poll_answers (id, poll_id, rate, text, votes)
+VALUES (?1, ?2, ?3, ?4, ?5);
+)"""";
+
+    static inline const std::string exists_poll_answer = R""""(
+SELECT EXISTS (SELECT * FROM poll_answers
+    WHERE id = ?1 AND poll_id = ?2);
 )"""";
 
     static inline const std::string insert_message_attachment = R""""(

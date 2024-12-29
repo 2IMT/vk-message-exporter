@@ -42,6 +42,8 @@ namespace vme::api::vk_data
             return "money_request";
         case story:
             return "story";
+        case poll:
+            return "poll";
         default:
             return "unknown";
         }
@@ -119,6 +121,10 @@ namespace vme::api::vk_data
         if (type == "story")
         {
             return story;
+        }
+        if (type == "poll")
+        {
+            return poll;
         }
 
         return std::nullopt;

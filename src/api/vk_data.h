@@ -169,6 +169,23 @@ namespace vme::api::vk_data
         std::int64_t expires_at;
     };
 
+    struct poll_answer
+    {
+        std::int64_t id;
+        float rate;
+        std::string text;
+        std::int64_t votes;
+    };
+
+    struct poll
+    {
+        std::int64_t id;
+        std::int64_t owner_id;
+        std::string question;
+        std::int64_t votes;
+        std::vector<poll_answer> answers;
+    };
+
     enum class attachment_type
     {
         photo,
@@ -187,7 +204,8 @@ namespace vme::api::vk_data
         audio_playlist,
         graffiti,
         money_request,
-        story
+        story,
+        poll
     };
 
     std::string attachment_type_to_string(attachment_type type) noexcept;
@@ -215,6 +233,7 @@ namespace vme::api::vk_data
         graffiti graffiti_value;
         money_request money_request_value;
         story story_value;
+        poll poll_value;
     };
 
     struct message

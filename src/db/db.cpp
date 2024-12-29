@@ -734,6 +734,41 @@ namespace vme::db
 
                 break;
             }
+
+            case poll:
+            {
+                attachment_id = attachment.poll_value.id;
+                sql_result result = _execute_stmt(
+                    m_sqlite3, sql::exists_poll, sql_int(attachment_id));
+                if (result.get_bool(0))
+                {
+                    break;
+                }
+
+                _execute_stmt(m_sqlite3, sql::insert_poll,
+                    sql_int(attachment.poll_value.id),
+                    sql_int(attachment.poll_value.owner_id),
+                    sql_text(attachment.poll_value.question),
+                    sql_int(attachment.poll_value.votes));
+
+                for (const auto& answer : attachment.poll_value.answers)
+                {
+                    sql_result result =
+                        _execute_stmt(m_sqlite3, sql::exists_poll_answer,
+                            sql_int(answer.id), sql_int(attachment_id));
+                    if (result.get_bool(0))
+                    {
+                        continue;
+                    }
+
+                    _execute_stmt(m_sqlite3, sql::insert_poll_answer,
+                        sql_int(answer.id), sql_int(attachment_id),
+                        sql_real(answer.rate), sql_text(answer.text),
+                        sql_int(answer.votes));
+                }
+
+                break;
+            }
             }
 
             _execute_stmt(m_sqlite3, sql::insert_message_attachment,

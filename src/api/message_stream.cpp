@@ -20,6 +20,15 @@ namespace vme::api
         out.duration = item.at("duration").template get<std::int64_t>();
     }
 
+    static void _parse_poll_answer(
+        const nlohmann::json& item, vk_data::poll_answer& out)
+    {
+        out.id = item.at("id").template get<std::int64_t>();
+        out.rate = item.at("rate").template get<float>();
+        out.text = item.at("text").template get<std::string>();
+        out.votes = item.at("votes").template get<std::int64_t>();
+    }
+
     static vk_data::attachment _parse_attachment(
         const nlohmann::json& attachment_item, std::int64_t& link_id_counter,
         std::int64_t& call_id_counter)
@@ -339,6 +348,23 @@ namespace vme::api
                 attachment.at("date").template get<std::int64_t>();
             result.story_value.expires_at =
                 attachment.at("expires_at").template get<std::int64_t>();
+            break;
+
+        case poll:
+            result.poll_value.id =
+                attachment.at("id").template get<std::int64_t>();
+            result.poll_value.owner_id =
+                attachment.at("owner_id").template get<std::int64_t>();
+            result.poll_value.question =
+                attachment.at("question").template get<std::string>();
+            result.poll_value.votes =
+                attachment.at("votes").template get<std::int64_t>();
+            for (const auto& item : attachment.at("answers"))
+            {
+                vk_data::poll_answer poll_answer;
+                _parse_poll_answer(item, poll_answer);
+                result.poll_value.answers.push_back(poll_answer);
+            }
             break;
         }
 
