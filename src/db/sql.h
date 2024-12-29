@@ -189,6 +189,13 @@ CREATE TABLE IF NOT EXISTS stories (
     expires_at INTEGER NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS events (
+    id INTEGER NOT NULL PRIMARY KEY,
+    button_text TEXT NOT NULL,
+    text TEXT NOT NULL,
+    member_status INTEGER NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS message_attachments (
     message_from_id INTEGER NOT NULL,
     message_conversation_message_id INTEGER NOT NULL,
@@ -413,6 +420,15 @@ VALUES (?1, ?2, ?3, ?4, ?5);
     static inline const std::string exists_poll_answer = R""""(
 SELECT EXISTS (SELECT * FROM poll_answers
     WHERE id = ?1 AND poll_id = ?2);
+)"""";
+
+    static inline const std::string insert_event = R""""(
+INSERT INTO events (id, button_text, text, member_status)
+VALUES (?1, ?2, ?3, ?4);
+)"""";
+
+    static inline const std::string exists_event = R""""(
+SELECT EXISTS (SELECT * FROM events WHERE id = ?1);
 )"""";
 
     static inline const std::string insert_message_attachment = R""""(

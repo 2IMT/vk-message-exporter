@@ -186,6 +186,14 @@ namespace vme::api::vk_data
         std::vector<poll_answer> answers;
     };
 
+    struct event
+    {
+        std::int64_t id;
+        std::string button_text;
+        std::string text;
+        std::int64_t member_status;
+    };
+
     enum class attachment_type
     {
         photo,
@@ -205,7 +213,8 @@ namespace vme::api::vk_data
         graffiti,
         money_request,
         story,
-        poll
+        poll,
+        event
     };
 
     std::string attachment_type_to_string(attachment_type type) noexcept;
@@ -234,6 +243,7 @@ namespace vme::api::vk_data
         money_request money_request_value;
         story story_value;
         poll poll_value;
+        event event_value;
     };
 
     struct message

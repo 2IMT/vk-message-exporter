@@ -769,6 +769,25 @@ namespace vme::db
 
                 break;
             }
+
+            case event:
+            {
+                attachment_id = attachment.event_value.id;
+                sql_result result = _execute_stmt(m_sqlite3, sql::exists_event,
+                    sql_int(attachment.event_value.id));
+                if (result.get_bool(0))
+                {
+                    break;
+                }
+
+                _execute_stmt(m_sqlite3, sql::insert_event,
+                    sql_int(attachment.event_value.id),
+                    sql_text(attachment.event_value.button_text),
+                    sql_text(attachment.event_value.text),
+                    sql_int(attachment.event_value.member_status));
+
+                break;
+            }
             }
 
             _execute_stmt(m_sqlite3, sql::insert_message_attachment,

@@ -44,6 +44,8 @@ namespace vme::api::vk_data
             return "story";
         case poll:
             return "poll";
+        case event:
+            return "event";
         default:
             return "unknown";
         }
@@ -125,6 +127,10 @@ namespace vme::api::vk_data
         if (type == "poll")
         {
             return poll;
+        }
+        if (type == "event")
+        {
+            return event;
         }
 
         return std::nullopt;

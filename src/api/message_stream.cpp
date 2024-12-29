@@ -366,6 +366,17 @@ namespace vme::api
                 result.poll_value.answers.push_back(poll_answer);
             }
             break;
+
+        case event:
+            result.event_value.id =
+                attachment.at("id").template get<std::int64_t>();
+            result.event_value.button_text =
+                attachment.at("button_text").template get<std::string>();
+            result.event_value.text =
+                attachment.at("text").template get<std::string>();
+            result.event_value.member_status =
+                attachment.at("member_status").template get<std::int64_t>();
+            break;
         }
 
         return result;
