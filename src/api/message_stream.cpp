@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <cstddef>
 #include <optional>
+#include <limits>
 
 #define JSON_DIAGNOSTICS 1
 #include <nlohmann/json.hpp>
@@ -58,14 +59,39 @@ namespace vme::api
                 attachment.at("owner_id").template get<std::int64_t>();
             result.photo_value.date =
                 attachment.at("date").template get<std::int64_t>();
-            result.photo_value.url = attachment.at("orig_photo")
-                                         .at("url")
-                                         .template get<std::string>();
+            if (attachment.contains("orig_photo"))
+            {
+                result.photo_value.url = attachment.at("orig_photo")
+                                             .at("url")
+                                             .template get<std::string>();
+            }
+            else if (attachment.contains("width") &&
+                attachment.contains("height") &&
+                attachment.at("width").template get<std::int64_t>() > 0 &&
+                attachment.at("height").template get<std::int64_t>() > 0)
+            {
+                std::int64_t max_size = std::numeric_limits<std::int64_t>::min();
+                for (const auto& item : attachment.at("sizes"))
+                {
+                    std::int64_t width = item.at("width").template get<std::int64_t>();
+                    std::int64_t height = item.at("height").template get<std::int64_t>();
+                    std::int64_t size = width * height;
+                    if (size > max_size)
+                    {
+                        max_size = size;
+                        result.photo_value.url = item.at("url").template get<std::string>();
+                    }
+                }
+            }
+            else
+            {
+                auto& sizes = attachment.at("sizes");
+                result.photo_value.url = sizes.at(sizes.size() - 1);
+            }
             break;
 
         case video:
         {
-
             result.video_value.id =
                 attachment.at("id").template get<std::int64_t>();
             result.video_value.owner_id =
