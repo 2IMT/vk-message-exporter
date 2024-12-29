@@ -270,8 +270,15 @@ namespace vme::api
                 attachment.at("create_time").template get<std::int64_t>();
             result.audio_playlist_value.update_time =
                 attachment.at("update_time").template get<std::int64_t>();
-            result.audio_playlist_value.year =
-                attachment.at("year").template get<std::int64_t>();
+            if (attachment.contains("year"))
+            {
+                result.audio_playlist_value.year =
+                    attachment.at("year").template get<std::int64_t>();
+            }
+            else
+            {
+                result.audio_playlist_value.year = std::nullopt;
+            }
             result.audio_playlist_value.title =
                 attachment.at("title").template get<std::string>();
             result.audio_playlist_value.description =
@@ -485,7 +492,7 @@ namespace vme::api
         if (m_message_buffer.empty())
         {
             // clang-format off
-            std::string response = 
+            std::string response =
                 m_session.call("method/messages.getHistory", {
                     { "offset",       m_current_offset },
                     { "peer_id",      m_peer_id },

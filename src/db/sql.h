@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS forwarded_messages (
     sequence_number INTEGER NOT NULL
 );
 
-CREATE INDEX IF NOT EXISTS 
+CREATE INDEX IF NOT EXISTS
     idx_forwarded_messages_message_from_id_message_conversation_message_id
     ON forwarded_messages(message_from_id, message_conversation_message_id);
 
@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS audio_playlists (
     owner_id INTEGER NOT NULL,
     create_time INTEGER NOT NULL,
     update_time INTEGER NOT NULL,
-    year INTEGER NOT NULL,
+    year INTEGER,
     title TEXT NOT NULL,
     description TEXT NOT NULL
 );
@@ -181,14 +181,14 @@ CREATE TABLE IF NOT EXISTS message_attachments (
     attachment_type TEXT NOT NULL
 );
 
-CREATE INDEX IF NOT EXISTS 
+CREATE INDEX IF NOT EXISTS
     idx_message_attachments_message_from_id_message_conversation_message_id
     ON message_attachments(message_from_id, message_conversation_message_id);
 )"""";
 
     static inline const std::string exists_message = R""""(
-SELECT EXISTS (SELECT * FROM messages 
-               WHERE id = ?1 AND from_id = ?2 
+SELECT EXISTS (SELECT * FROM messages
+               WHERE id = ?1 AND from_id = ?2
                AND conversation_message_id = ?3);
 )"""";
 

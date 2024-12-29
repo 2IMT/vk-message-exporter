@@ -139,7 +139,7 @@ namespace vme::api::vk_data
         std::int64_t owner_id;
         std::int64_t create_time;
         std::int64_t update_time;
-        std::int64_t year;
+        std::optional<std::int64_t> year;
         std::string title;
         std::string description;
         std::vector<audio> audios;

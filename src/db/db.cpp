@@ -652,12 +652,18 @@ namespace vme::db
                     break;
                 }
 
+                sql_int year(sql_null);
+                if (attachment.audio_playlist_value.year.has_value())
+                {
+                    year =
+                        sql_int(attachment.audio_playlist_value.year.value());
+                }
+
                 _execute_stmt(m_sqlite3, sql::insert_audio_playlist,
                     sql_int(attachment.audio_playlist_value.id),
                     sql_int(attachment.audio_playlist_value.owner_id),
                     sql_int(attachment.audio_playlist_value.create_time),
-                    sql_int(attachment.audio_playlist_value.update_time),
-                    sql_int(attachment.audio_playlist_value.year),
+                    sql_int(attachment.audio_playlist_value.update_time), year,
                     sql_text(attachment.audio_playlist_value.title),
                     sql_text(attachment.audio_playlist_value.description));
 
