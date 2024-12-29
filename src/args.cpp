@@ -156,7 +156,7 @@ namespace vme
 -storage_root  -r (string)  OPTIONAL :
     Sets directory to store data in.
     (Default: current working directory)
--show_progress -p (boolean) OPTIONAL :
+-show_progress -s (boolean) OPTIONAL :
     Shows progress when set to true
     (Default: true))"""",
             m_program_name);
