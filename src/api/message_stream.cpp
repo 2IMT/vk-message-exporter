@@ -86,7 +86,7 @@ namespace vme::api
             else
             {
                 auto& sizes = attachment.at("sizes");
-                result.photo_value.url = sizes.at(sizes.size() - 1);
+                result.photo_value.url = sizes.at(sizes.size() - 1).at("url").template get<std::string>();
             }
             break;
 
