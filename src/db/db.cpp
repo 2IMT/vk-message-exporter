@@ -465,6 +465,12 @@ namespace vme::db
                     break;
                 }
 
+                sql_text caption(sql_null);
+                if (attachment.link_value.caption.has_value())
+                {
+                    caption = attachment.link_value.caption.value();
+                }
+
                 sql_text description(sql_null);
                 if (attachment.link_value.description.has_value())
                 {
@@ -474,8 +480,7 @@ namespace vme::db
                 _execute_stmt(m_sqlite3, sql::insert_link,
                     sql_int(attachment.link_value.id),
                     sql_text(attachment.link_value.title),
-                    sql_text(attachment.link_value.url),
-                    sql_text(attachment.link_value.caption), description);
+                    sql_text(attachment.link_value.url), caption, description);
                 break;
             }
 

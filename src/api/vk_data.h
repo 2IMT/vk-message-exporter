@@ -58,7 +58,7 @@ namespace vme::api::vk_data
         std::int64_t id;
         std::string url;
         std::string title;
-        std::string caption;
+        std::optional<std::string> caption;
         std::optional<std::string> description;
     };
 

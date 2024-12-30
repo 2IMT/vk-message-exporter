@@ -149,8 +149,11 @@ namespace vme::api
                 attachment.at("url").template get<std::string>();
             result.link_value.title =
                 attachment.at("title").template get<std::string>();
-            result.link_value.caption =
-                attachment.at("caption").template get<std::string>();
+            if (attachment.contains("caption"))
+            {
+                result.link_value.caption =
+                    attachment.at("caption").template get<std::string>();
+            }
             if (attachment.contains("description"))
             {
                 result.link_value.description =
