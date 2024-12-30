@@ -80,8 +80,8 @@ namespace vme::api
         m_values = new_values;
     }
 
-    void params::remove_param(std::size_t index) 
-    { 
+    void params::remove_param(std::size_t index)
+    {
         if (index >= m_values.size())
         {
             _throw_param_index_out_of_bounds(index, m_values.size());

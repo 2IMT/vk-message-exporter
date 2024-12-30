@@ -183,7 +183,7 @@ namespace vme::api
         }
 
         // clang-format off
-        std::string response = 
+        std::string response =
             m_session.call("method/users.get", {
                 { "user_ids",     id_list.str() },
                 { "access_token", m_access_token },

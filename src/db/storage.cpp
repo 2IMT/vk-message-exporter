@@ -40,7 +40,8 @@ namespace vme::db
         }
     }
 
-    static void _create_directory(const std::string& root, const std::string& name)
+    static void _create_directory(
+        const std::string& root, const std::string& name)
     {
         std::filesystem::path path = std::format("{}/{}", root, name);
         try
@@ -63,8 +64,8 @@ namespace vme::db
         catch (const std::filesystem::filesystem_error& e)
         {
             throw storage_io_error(std::format(
-                "IO error: Failed to ensure directory \"{}\" exists: {}", path.string(),
-                e.what()));
+                "IO error: Failed to ensure directory \"{}\" exists: {}",
+                path.string(), e.what()));
         }
     }
 
